@@ -3,6 +3,15 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --palette-primary: #4880ee;
+  --palette-red: #e84118;
+  --palette-gray: #dadada;
+  --palette-light-gray: #f2f4f6;
+  --palette-white: #ffffff;
+  --palette-black: #222222;
+  --text-primary: #353c49;
+  --text-secondary: #6d7582;
+  --text-subtitle: #8d94a0;
 }
 
 @theme inline {
@@ -10,6 +19,15 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary: var(--palette-primary);
+  --color-red: var(--palette-red);
+  --color-gray: var(--palette-gray);
+  --color-light-gray: var(--palette-light-gray);
+  --color-white: var(--palette-white);
+  --color-black: var(--palette-black);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-subtitle: var(--text-subtitle);
 }
 
 @media (prefers-color-scheme: dark) {
