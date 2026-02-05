@@ -1,19 +1,30 @@
 import { dtoToBook } from "./books.mapper";
 import { SearchBooksQuery, getSearchBooks } from "./books.fetch";
-import { dtoToPagination } from "../meta/pagination/pagination.mapper";
+import { BookRepo } from "@/application/repos/book.repo";
 
-export const searchBooks = async (query: SearchBooksQuery) => {
-  const response = await getSearchBooks(query);
+export const bookRepo: BookRepo = {
+  searchBooks: async (payload) => {
+    const searchBooksQuery: SearchBooksQuery = {
+      query: payload.value,
+      target:
+        payload.type === "title"
+          ? "title"
+          : payload.type === "author"
+          ? "person"
+          : "publisher",
+      page: payload.page,
+      size: payload.perPage,
+      sort: "accuracy",
+    };
 
-  const books = response.documents.map(dtoToBook);
-  const pagination = dtoToPagination({
-    ...response.meta,
-    page: query.page,
-    size: query.size,
-  });
+    const response = await getSearchBooks(searchBooksQuery);
 
-  return {
-    books,
-    pagination,
-  };
+    const books = response.documents.map(dtoToBook);
+    const totalItems = response.meta.pageable_count * payload.perPage;
+
+    return {
+      books,
+      totalItems,
+    };
+  },
 };
