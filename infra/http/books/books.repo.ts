@@ -20,7 +20,7 @@ export const bookRepo: BookRepo = {
     const response = await getSearchBooks(searchBooksQuery);
 
     const books = response.documents.map(dtoToBook);
-    const totalItems = response.meta.pageable_count * payload.perPage;
+    const totalItems = response.meta.pageable_count;
 
     return {
       books,
