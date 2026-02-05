@@ -1,5 +1,5 @@
 import { dtoToBook } from "./books.mapper";
-import { SearchBooksQuery, getSearchBooks } from "./books.api";
+import { SearchBooksQuery, getSearchBooks } from "./books.fetch";
 import { dtoToPagination } from "../meta/pagination/pagination.mapper";
 
 export const searchBooks = async (query: SearchBooksQuery) => {
