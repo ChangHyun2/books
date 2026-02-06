@@ -1,6 +1,7 @@
 import { BookDto } from "./books.dto";
 import { Book } from "@/models/books/book.model";
 
+// server dto => domain model
 export const dtoToBook = (bookDto: BookDto): Book => {
   return {
     coverUrl: bookDto.thumbnail,

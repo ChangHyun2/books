@@ -1,11 +1,11 @@
 // utils/object.ts
-export function omitUndefined<T extends Record<string, unknown>>(obj: T) {
+export function omitNullable<T extends Record<string, unknown>>(obj: T) {
   return Object.fromEntries(
-    Object.entries(obj).filter(([, v]) => v !== undefined)
+    Object.entries(obj).filter(([, v]) => v !== null && v !== undefined)
   ) as {
-    [K in keyof T as T[K] extends undefined ? never : K]: Exclude<
+    [K in keyof T as T[K] extends null | undefined ? never : K]: Exclude<
       T[K],
-      undefined
+      null | undefined
     >;
   };
 }

@@ -1,43 +1,30 @@
-import { z } from "zod";
-import kakaoClient from "../kakao.client";
-import { BookDto } from "./books.dto";
-import { PaginationMetaDto } from "../meta/pagination/pagination.dto";
-import { omitUndefined } from "@/utils/object/omitUndefined";
-import { KAKAO_SEARCH_BOOKS_PATH } from "../endpoints";
+import { Book } from "@/models/books/book.model";
+import { SearchBooksValidInput } from "@/application/repos/books.repo";
 
-export const searchBooksRequestSchema = z.object({
-  query: z.string().min(1, "query is required"),
-  sort: z.enum(["accuracy", "latest"]).optional(),
-  page: z.coerce.number().int().min(1).max(50).default(1),
-  size: z.coerce.number().int().min(1).max(50).default(10),
-  target: z.enum(["title", "isbn", "publisher", "person"]).optional(),
-});
-
-export type SearchBooksQuery = z.infer<typeof searchBooksRequestSchema>;
+import nextClient from "../next.client";
+import { NEXT_SEARCH_BOOKS_PATH } from "../endpoints";
 
 export type SearchBooksResponse = {
-  meta: PaginationMetaDto;
-  documents: Array<BookDto>;
+  books: Book[];
+  totalAvailableItems: number;
 };
 
-export const getSearchBooks = (request: SearchBooksQuery) => {
-  const { query, sort, page, size, target } =
-    searchBooksRequestSchema.parse(request);
-
-  const searchParams = omitUndefined({
-    query,
-    sort,
-    page,
-    size,
-    target,
+export const getSearchBooks = async (
+  validInput: SearchBooksValidInput
+): Promise<SearchBooksResponse> => {
+  const params = new URLSearchParams({
+    value: validInput.value,
+    type: validInput.type,
+    page: String(validInput.page),
+    perPage: String(validInput.perPage),
   });
 
-  const response = kakaoClient.get<SearchBooksResponse>(
-    KAKAO_SEARCH_BOOKS_PATH,
+  const response = await nextClient.get<SearchBooksResponse>(
+    NEXT_SEARCH_BOOKS_PATH,
     {
-      searchParams,
+      searchParams: params,
     }
   );
 
-  return response.json();
+  return response.json<SearchBooksResponse>();
 };
