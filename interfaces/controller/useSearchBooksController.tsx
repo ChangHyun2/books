@@ -1,51 +1,58 @@
-import { SearchBooksValidInput } from "@/application/ports/searchBooks.port";
+import {
+  SearchBooksUIInput,
+  searchBooksInputSchema,
+} from "@/application/ports/searchBooks.port";
 import { SearchBooksUsecase } from "@/application/usecases/books/search-books";
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+
+import { useMemo, useState } from "react";
+import useSearchBooksQuery from "../react-query/queries/useSearchBooksQuery";
 
 export default function useSearchBooksController({
   usecase,
 }: {
   usecase: SearchBooksUsecase;
 }) {
-  const [searchBooksInput, setSearchBooksInput] =
-    useState<SearchBooksValidInput>({
-      value: "",
-      type: "title",
-      page: 1,
-      perPage: 10,
-    });
+  const [searchBooksInput, setSearchBooksInput] = useState<SearchBooksUIInput>({
+    value: "",
+    type: "title",
+    page: 1,
+    perPage: 10,
+  });
 
-  const searchBooksQuery = useQuery({
-    queryKey: ["search-books"],
-    queryFn: () => usecase.execute(searchBooksInput),
-    enabled: searchBooksInput.value.length > 0,
+  const searchBooksSafeParsed = useMemo(
+    () => searchBooksInputSchema.safeParse(searchBooksInput).data,
+    [searchBooksInput]
+  );
+
+  const searchBooksQuery = useSearchBooksQuery({
+    usecase,
+    searchBooksValidInput: searchBooksSafeParsed,
   });
 
   const changeSearchValue = (value: string) => {
-    setSearchBooksInput({ ...searchBooksInput, value });
+    setSearchBooksInput((prev) => ({ ...prev, value, page: 1 }));
   };
 
   const changeSearchType = (type: "title" | "author" | "publisher") => {
-    setSearchBooksInput({ ...searchBooksInput, type });
+    setSearchBooksInput((prev) => ({ ...prev, type, page: 1 }));
   };
 
   const nextPage = () => {
-    setSearchBooksInput({
-      ...searchBooksInput,
+    setSearchBooksInput((prev) => ({
+      ...prev,
       page: searchBooksInput.page + 1,
-    });
+    }));
   };
 
   const previousPage = () => {
-    setSearchBooksInput({
-      ...searchBooksInput,
-      page: searchBooksInput.page - 1,
-    });
+    setSearchBooksInput((prev) => ({
+      ...prev,
+      page: Math.max(1, searchBooksInput.page - 1),
+    }));
   };
 
   const changePage = (page: number) => {
-    setSearchBooksInput({ ...searchBooksInput, page });
+    setSearchBooksInput((prev) => ({ ...prev, page }));
   };
 
   return {

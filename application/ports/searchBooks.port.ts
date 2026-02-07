@@ -8,4 +8,8 @@ export const searchBooksInputSchema = z.object({
 });
 
 export type SearchBooksInput = z.input<typeof searchBooksInputSchema>;
+export type SearchBooksUIInput = SearchBooksInput & {
+  page: number;
+  perPage: number;
+};
 export type SearchBooksValidInput = z.output<typeof searchBooksInputSchema>;
