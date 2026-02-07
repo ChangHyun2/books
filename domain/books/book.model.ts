@@ -1,5 +1,5 @@
 export type Book = {
-  id: string; // isbn
+  id: string;
   publisher: string;
   coverUrl: string;
   purchaseUrl: string;
@@ -8,4 +8,6 @@ export type Book = {
   description: string;
   price: number;
   salePrice: number;
+  isbn10?: string;
+  isbn13?: string;
 };
