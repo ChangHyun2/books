@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,12 +30,38 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  void children;
+
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased p-4`}
       >
-        {children}
+        <div className="w-full max-w-3xl mx-auto">
+          <div className="flex justify-between items-center">
+            <div>BOOKS</div>
+            <NavigationMenu aria-label="Primary">
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    asChild
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    <Link href="/books">도서 검색</Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    asChild
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    <Link href="/me/likes">내가 찜한 책</Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+        </div>
       </body>
     </html>
   );
