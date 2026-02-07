@@ -12,7 +12,13 @@ export const bookRepo: BooksRepo = {
     const { value, type, page, perPage } = query;
 
     const target =
-      type === "title" ? "title" : type === "author" ? "person" : "publisher";
+      type === "title"
+        ? "title"
+        : type === "author"
+        ? "person"
+        : type === "publisher"
+        ? "publisher"
+        : undefined;
 
     const kakaoSearchBooksParams: KakaoSearchBooksParams = {
       query: value,

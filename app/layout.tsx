@@ -9,6 +9,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import Providers from "./Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,33 +36,36 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased p-4`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="w-full max-w-3xl mx-auto">
-          <div className="flex justify-between items-center">
-            <div>BOOKS</div>
-            <NavigationMenu aria-label="Primary">
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    asChild
-                    className={navigationMenuTriggerStyle()}
-                  >
-                    <Link href="/books">도서 검색</Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    asChild
-                    className={navigationMenuTriggerStyle()}
-                  >
-                    <Link href="/me/likes">내가 찜한 책</Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+        <Providers>
+          <div className="p-4 w-full max-w-[960px] mx-auto">
+            <header className="flex justify-between items-center">
+              <div>BOOKS</div>
+              <NavigationMenu aria-label="Primary">
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuLink
+                      asChild
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      <Link href="/books">도서 검색</Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <NavigationMenuLink
+                      asChild
+                      className={navigationMenuTriggerStyle()}
+                    >
+                      <Link href="/me/likes">내가 찜한 책</Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+            </header>
+            <main>{children}</main>{" "}
           </div>
-        </div>
+        </Providers>
       </body>
     </html>
   );

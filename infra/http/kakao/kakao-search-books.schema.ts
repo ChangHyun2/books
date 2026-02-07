@@ -26,8 +26,8 @@ export type KakaoBookDto = z.output<typeof KakaoBookDtoSchema>;
 export const kakaoSearchBooksParamsSchema = z.object({
   query: z.string().min(1, "query is required"),
   sort: z.enum(["accuracy", "latest"]).optional(),
-  page: z.number().int().min(1).max(50).default(1),
-  size: z.number().int().min(1).max(50).default(10),
+  page: z.coerce.number().int().min(1).max(50).default(1),
+  size: z.coerce.number().int().min(1).max(50).default(10),
   target: z.enum(["title", "isbn", "publisher", "person"]).optional(),
 });
 

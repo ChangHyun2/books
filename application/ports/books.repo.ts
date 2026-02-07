@@ -2,9 +2,9 @@ import { Book } from "@/domain/books/book.model";
 
 export type SearchBooksQuery = {
   value: string;
-  type: "title" | "author" | "publisher";
   page: number;
   perPage: number;
+  type?: "title" | "author" | "publisher";
 };
 
 export type SearchBooksResult = {

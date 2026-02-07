@@ -20,7 +20,7 @@ export const dtoToBook = (bookDto: BookDto): Book => {
     }
   }
 
-  const id = `${bookDto.title}-${isbn10 ?? ""}-${isbn13 ?? ""}`;
+  const id = bookDto.url;
 
   return {
     id,

@@ -19,10 +19,11 @@ export default function useSearchBooksQuery(params: {
       }
     ),
     queryFn: () => {
+      console.log("searchBooksValidInput", searchBooksValidInput);
       if (!searchBooksValidInput) {
         throw new Error("Search books valid input is required");
       }
-      usecase.execute(searchBooksValidInput);
+      return usecase.execute(searchBooksValidInput);
     },
     enabled: !!searchBooksValidInput,
   });

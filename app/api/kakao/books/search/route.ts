@@ -10,12 +10,14 @@ import {
 
 // kakao api proxy
 
-export const KAKAO_SEARCH_BOOKS_PATH = "/v3/search/book";
+export const KAKAO_SEARCH_BOOKS_PATH = "v3/search/book";
 
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
-    const validParams = kakaoSearchBooksParamsSchema.safeParse(searchParams);
+    const validParams = kakaoSearchBooksParamsSchema.safeParse(
+      Object.fromEntries(searchParams)
+    );
 
     if (!validParams.success) {
       return NextResponse.json(
@@ -45,6 +47,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(validResponse.data);
   } catch (error) {
+    console.log(error);
     if (error instanceof ZodError) {
       return NextResponse.json(
         { message: "Invalid query or response", issues: error.issues },
