@@ -5,7 +5,7 @@ import { Spinner } from "./ui/spinner";
 import handleError from "@/utils/handleError";
 
 export default function QueryFallback({ query }: { query: UseQueryResult }) {
-  if (query.isLoading) {
+  if (query.isFetching) {
     return (
       <div className="flex items-center justify-center h-full">
         <Spinner />

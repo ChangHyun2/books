@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { booksKeys } from "../keys";
 import { SearchBooksUsecase } from "@/application/usecases/books/search-books";
 import { SearchBooksValidInput } from "@/application/ports/searchBooks.port";
@@ -25,6 +25,9 @@ export default function useSearchBooksQuery(params: {
       }
       return usecase.execute(searchBooksValidInput);
     },
+    placeholderData: keepPreviousData,
     enabled: !!searchBooksValidInput,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
   });
 }

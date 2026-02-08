@@ -39,7 +39,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          <div className="p-4 w-full max-w-[960px] mx-auto">
+          <div className="p-4 w-full max-w-[960px] mx-auto h-screen flex flex-col">
             <header className="flex justify-between items-center">
               <div>BOOKS</div>
               <NavigationMenu aria-label="Primary">
@@ -63,7 +63,9 @@ export default function RootLayout({
                 </NavigationMenuList>
               </NavigationMenu>
             </header>
-            <main>{children}</main>{" "}
+            <main className="flex-1 min-h-0 overflow-hidden px-4 py-6">
+              {children}
+            </main>
           </div>
         </Providers>
       </body>

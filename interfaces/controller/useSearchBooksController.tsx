@@ -5,10 +5,7 @@ import {
   SearchBooksValidInput,
   searchBooksInputSchema,
 } from "@/application/ports/searchBooks.port";
-import {
-  SearchBooksUsecase,
-  createSearchBooksUsecase,
-} from "@/application/usecases/books/search-books";
+import { createSearchBooksUsecase } from "@/application/usecases/books/search-books";
 
 import {
   createContext,
