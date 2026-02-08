@@ -4,44 +4,41 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { useSearchBooksUIController } from "@/interfaces/controller/useSearchBooksController";
+import { useSearchBooks } from "@/interfaces/controller/useSearchBooksController";
 import { Search } from "lucide-react";
-import { SubmitEventHandler, useState } from "react";
 import { DetailSearchPayload } from "./BookSearchBarFilter";
+import { useState } from "react";
 
 export default function BookSearchBar() {
-  const { searchBooks } = useSearchBooksUIController();
+  const { submit } = useSearchBooks();
+  const [searchValue, setSearchValue] = useState("");
 
-  const [searchValue, setSearchValue] = useState<string>("");
-
-  const handleChangeSearchBookValue: React.ChangeEventHandler<
-    HTMLInputElement
-  > = (e) => {
-    const value = e.target.value;
-    const trimmedValue = value.trim();
-    setSearchValue(trimmedValue);
-  };
-
-  const handleSubmit: SubmitEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmitAll: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    searchBooks(undefined, searchValue);
+    submit({ type: undefined, value: searchValue });
   };
 
   const handleSubmitDetail = (payload: DetailSearchPayload) => {
-    searchBooks(payload.type, payload.value);
     setSearchValue(payload.value);
+    submit({ type: payload.type, value: payload.value });
   };
 
   return (
-    <form id="search-books-form" className="flex gap-2" onSubmit={handleSubmit}>
+    <form
+      id="search-books-form"
+      className="flex gap-2"
+      onSubmit={handleSubmitAll}
+    >
       <InputGroup className="max-w-xs">
         <InputGroupInput
           placeholder="검색어를 입력해주세요."
           value={searchValue}
-          onChange={handleChangeSearchBookValue}
+          onChange={(e) => setSearchValue(e.target.value)}
         />
         <InputGroupAddon>
-          <Search type="submit" />
+          <button type="submit" aria-label="검색">
+            <Search />
+          </button>
         </InputGroupAddon>
       </InputGroup>
       <BookSearchBarFilter onSubmit={handleSubmitDetail} />

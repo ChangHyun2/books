@@ -9,9 +9,9 @@ import {
 } from "../ui/select";
 import { Input } from "../ui/input";
 import { SearchBooksUIInput } from "@/application/ports/searchBooks.port";
-import { useState } from "react";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { X } from "lucide-react";
+import { useState } from "react";
 
 type DetailSearchBookType = NonNullable<SearchBooksUIInput["type"]>;
 export type DetailSearchPayload = {
@@ -39,40 +39,22 @@ export default function BookSearchBarFilter({
         <Button>상세검색</Button>
       </PopoverTrigger>
       <PopoverContent>
-        <Content onSubmit={onSubmit} />
+        <PopoverContentComponent onSubmit={onSubmit} />
       </PopoverContent>
     </Popover>
   );
 }
 
-function Content({
+function PopoverContentComponent({
   onSubmit,
 }: {
   onSubmit: (payload: DetailSearchPayload) => void;
 }) {
   const [searchType, setSearchType] = useState<DetailSearchBookType>("title");
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [searchValue, setSearchValue] = useState("");
 
-  const handleChangeSearchType = (value: DetailSearchBookType) => {
-    setSearchType(value);
-  };
-
-  const handleChangeSearchValue: React.ChangeEventHandler<HTMLInputElement> = (
-    e
-  ) => {
-    const value = e.target.value;
-    setSearchValue(value.trim());
-  };
-
-  const handleKeyDownInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      onSubmit({ type: searchType, value: searchValue });
-    }
-  };
-
-  const handleClickSearchButton = () => {
-    onSubmit({ type: searchType, value: searchValue });
+  const submit = () => {
+    onSubmit({ type: searchType, value: searchValue.trim() });
   };
 
   return (
@@ -85,7 +67,10 @@ function Content({
         </PopoverClose>
       </div>
       <div className="flex gap-1 mb-4">
-        <Select value={searchType} onValueChange={handleChangeSearchType}>
+        <Select
+          value={searchType}
+          onValueChange={(value: DetailSearchBookType) => setSearchType(value)}
+        >
           <SelectTrigger>
             <SelectValue placeholder="Select a fruit" />
           </SelectTrigger>
@@ -99,15 +84,16 @@ function Content({
         </Select>
         <Input
           value={searchValue}
-          onChange={handleChangeSearchValue}
-          onKeyDown={handleKeyDownInput}
+          onChange={(e) => setSearchValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              submit();
+            }
+          }}
         />
       </div>
-      <Button
-        type="submit"
-        className="w-full"
-        onClick={handleClickSearchButton}
-      >
+      <Button type="button" className="w-full" onClick={submit}>
         검색하기
       </Button>
     </div>
