@@ -41,10 +41,8 @@ function buildPaginationItems(params: {
 }
 
 export default function BookPagination() {
-  const { searchBooksQuery, submit } = useSearchBooksController();
+  const { submit, totalPages } = useSearchBooksController();
   const [page, setPage] = useState(1);
-  const { totalCount } = searchBooksQuery.data ?? { totalCount: 0 };
-  const totalPages = Math.max(1, Math.ceil(totalCount / 10));
 
   const items = buildPaginationItems({ currentPage: page, totalPages });
   const canPrev = page > 1;

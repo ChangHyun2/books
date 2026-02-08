@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+export const KAKAO_SEARCH_BOOKS_MAX_PAGE = 50;
+export const KAKAO_SEARCH_BOOKS_MAX_SIZE = 50;
+
 export const KakaoBookDtoSchema = z.object({
   title: z.string(),
   contents: z.string(),
@@ -26,8 +29,18 @@ export type KakaoBookDto = z.output<typeof KakaoBookDtoSchema>;
 export const kakaoSearchBooksParamsSchema = z.object({
   query: z.string().min(1, "query is required"),
   sort: z.enum(["accuracy", "latest"]).optional(),
-  page: z.coerce.number().int().min(1).max(50).default(1),
-  size: z.coerce.number().int().min(1).max(50).default(10),
+  page: z.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(KAKAO_SEARCH_BOOKS_MAX_PAGE)
+    .default(1),
+  size: z.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(KAKAO_SEARCH_BOOKS_MAX_SIZE)
+    .default(10),
   target: z.enum(["title", "isbn", "publisher", "person"]).optional(),
 });
 

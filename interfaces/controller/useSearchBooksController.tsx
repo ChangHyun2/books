@@ -18,10 +18,13 @@ import {
 import useSearchBooksQuery from "../react-query/queries/useSearchBooksQuery";
 import { ZodError } from "zod";
 import { bookRepo } from "@/infra/http/next/books/books.repo";
+import { getTotalPages } from "@/interfaces/presenter/fromDomain/utils/pagination.presenter";
+import { KAKAO_SEARCH_BOOKS_MAX_PAGE } from "@/infra/http/kakao/kakao-search-books.schema";
 
 type SearchBooksController = {
   searchBooksQuery: ReturnType<typeof useSearchBooksQuery>;
   submit: (patch: Partial<SearchBooksUIInput>) => void;
+  totalPages: number;
 };
 
 const SearchBooksControllerContext =
@@ -51,6 +54,16 @@ export function SearchBooksControllerProvider({
     searchBooksValidInput,
   });
 
+  const totalPages = useMemo(() => {
+    return Math.min(
+      getTotalPages(
+        searchBooksQuery.data?.totalCount ?? 0,
+        searchBooksValidInput?.perPage ?? 10
+      ),
+      KAKAO_SEARCH_BOOKS_MAX_PAGE
+    );
+  }, [searchBooksQuery.data?.totalCount, searchBooksValidInput?.perPage]);
+
   const submit = useCallback(
     (patch: Partial<SearchBooksUIInput>) => {
       try {
@@ -72,8 +85,9 @@ export function SearchBooksControllerProvider({
     () => ({
       searchBooksQuery,
       submit,
+      totalPages,
     }),
-    [searchBooksQuery, submit]
+    [searchBooksQuery, submit, totalPages]
   );
 
   return (

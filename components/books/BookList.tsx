@@ -1,7 +1,7 @@
 "use client";
 
 import QueryFallback from "../QueryFallback";
-import { Separator } from "@radix-ui/react-select";
+import { Separator } from "../ui/separator";
 import BookItem from "./BookItem";
 import { useSearchBooksController } from "@/interfaces/controller/useSearchBooksController";
 

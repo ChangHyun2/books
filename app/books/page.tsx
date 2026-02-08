@@ -10,7 +10,7 @@ export default function BooksPage() {
       <h1 className="text-xl font-semibold mb-4">도서 검색</h1>
       <SearchBooksControllerProvider>
         <div className="flex-1 min-h-0 flex flex-col">
-          <div className="mb-4">
+          <div className="mb-4 ml-[1px]">
             <BookSearchBar />
           </div>
           <ScrollArea className="flex-1 min-h-0 pr-3">
