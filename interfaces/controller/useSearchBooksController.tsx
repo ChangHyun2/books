@@ -25,6 +25,7 @@ type SearchBooksController = {
   searchBooksQuery: ReturnType<typeof useSearchBooksQuery>;
   submit: (patch: Partial<SearchBooksUIInput>) => void;
   totalPages: number;
+  totalCount: number;
 };
 
 const SearchBooksControllerContext =
@@ -54,15 +55,21 @@ export function SearchBooksControllerProvider({
     searchBooksValidInput,
   });
 
+  const queryTotalCount = searchBooksQuery.data?.totalCount;
+  const perPage = searchBooksValidInput?.perPage;
+
   const totalPages = useMemo(() => {
+    if (queryTotalCount === undefined || perPage === undefined) return 0;
     return Math.min(
-      getTotalPages(
-        searchBooksQuery.data?.totalCount ?? 0,
-        searchBooksValidInput?.perPage ?? 10
-      ),
+      getTotalPages(queryTotalCount, perPage),
       KAKAO_SEARCH_BOOKS_MAX_PAGE
     );
-  }, [searchBooksQuery.data?.totalCount, searchBooksValidInput?.perPage]);
+  }, [queryTotalCount, perPage]);
+
+  const totalCount = useMemo(() => {
+    if (perPage === undefined) return 0;
+    return totalPages * perPage;
+  }, [totalPages, perPage]);
 
   const submit = useCallback(
     (patch: Partial<SearchBooksUIInput>) => {
@@ -86,8 +93,9 @@ export function SearchBooksControllerProvider({
       searchBooksQuery,
       submit,
       totalPages,
+      totalCount,
     }),
-    [searchBooksQuery, submit, totalPages]
+    [searchBooksQuery, submit, totalPages, totalCount]
   );
 
   return (

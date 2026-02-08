@@ -25,7 +25,7 @@ export default function BookList() {
 
     return (
       <div>
-        <div className="flex items-center">
+        <div className="flex items-center mb-2">
           <div className="mr-4">도서 검색 결과</div>
           <div>
             총 <span className="font-bold text-primary">{totalCount}</span>건
