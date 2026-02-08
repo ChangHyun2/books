@@ -86,7 +86,9 @@ function PopoverContentComponent({
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
+            // When using IME (e.g., Korean), Enter can fire while composing.
+            // Guard to avoid double-submit on composition commit + Enter.
+            if (e.key === "Enter" && !e.nativeEvent.isComposing) {
               e.preventDefault();
               submit();
             }

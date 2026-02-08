@@ -15,11 +15,13 @@ export default function BookSearchBar() {
 
   const handleSubmitAll: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    console.log("submit all");
     submit({ type: undefined, value: searchValue });
   };
 
   const handleSubmitDetail = (payload: DetailSearchPayload) => {
     setSearchValue(payload.value);
+    console.log("submit detail");
     submit({ type: payload.type, value: payload.value });
   };
 
