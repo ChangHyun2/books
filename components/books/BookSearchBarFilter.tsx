@@ -33,13 +33,19 @@ export default function BookSearchBarFilter({
 }: {
   onSubmit: (payload: DetailSearchPayload) => void;
 }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closePopover = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild className="cursor-pointer">
         <Button>상세검색</Button>
       </PopoverTrigger>
       <PopoverContent>
-        <PopoverContentComponent onSubmit={onSubmit} />
+        <PopoverContentComponent onSubmit={onSubmit} onClose={closePopover} />
       </PopoverContent>
     </Popover>
   );
@@ -47,14 +53,17 @@ export default function BookSearchBarFilter({
 
 function PopoverContentComponent({
   onSubmit,
+  onClose,
 }: {
   onSubmit: (payload: DetailSearchPayload) => void;
+  onClose: () => void;
 }) {
   const [searchType, setSearchType] = useState<DetailSearchBookType>("title");
   const [searchValue, setSearchValue] = useState("");
 
   const submit = () => {
     onSubmit({ type: searchType, value: searchValue.trim() });
+    onClose();
   };
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
@@ -67,11 +76,9 @@ function PopoverContentComponent({
   return (
     <div>
       <div className="flex justify-end -mt-2 mb-2">
-        <PopoverClose asChild>
-          <Button variant="ghost" size="icon">
-            <X />
-          </Button>
-        </PopoverClose>
+        <Button variant="ghost" size="icon" onClick={onClose}>
+          <X />
+        </Button>
       </div>
       <div className="flex gap-1 mb-4">
         <Select
