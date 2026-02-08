@@ -2,7 +2,7 @@ import type { Book } from "@/domain/books/book.model";
 import { toBookItem } from "@/interfaces/presenter/fromDomain/book.presenter";
 import { Skeleton } from "../ui/skeleton";
 
-export default function BookListItemSummary({ book }: { book: Book }) {
+export default function BookSummary({ book }: { book: Book }) {
   const bookItem = toBookItem(book);
   const { price } = bookItem;
 

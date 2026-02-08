@@ -1,8 +1,19 @@
-import { Book } from "@/domain/books/book.model";
-import { Separator } from "@/components/ui/separator";
-import BookListItem from "./BookLIstItem";
+"use client";
 
-export default function BookList({ books }: { books: Book[] }) {
+import QueryFallback from "../QueryFallback";
+import { Separator } from "@radix-ui/react-select";
+import BookItem from "./BookItem";
+import { useSearchBooksController } from "@/interfaces/controller/useSearchBooksController";
+
+export default function BookList() {
+  const { searchBooksQuery } = useSearchBooksController();
+
+  if (!searchBooksQuery.data) {
+    return <QueryFallback query={searchBooksQuery} />;
+  }
+
+  const { books } = searchBooksQuery.data;
+
   if (books.length === 0) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -16,7 +27,7 @@ export default function BookList({ books }: { books: Book[] }) {
       <Separator className="mb-2" />
       {books.map((book, index) => (
         <div key={book.id}>
-          <BookListItem book={book} />
+          <BookItem book={book} />
           {index !== books.length - 1 && <Separator className="my-2" />}
         </div>
       ))}

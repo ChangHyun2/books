@@ -2,7 +2,7 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "../ui/button";
 import { Book } from "@/domain/books/book.model";
 
-export default function BookListItemActions({
+export default function BookActions({
   isExpanded,
   expand,
   book,
@@ -12,6 +12,7 @@ export default function BookListItemActions({
   book: Book;
 }) {
   const { purchaseUrl, price, salePrice } = book;
+
   const purchaseButton = (
     <Button asChild className="w-full">
       <a href={purchaseUrl} target="_blank" rel="noopener noreferrer">

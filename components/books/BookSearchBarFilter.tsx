@@ -11,7 +11,7 @@ import { Input } from "../ui/input";
 import { SearchBooksUIInput } from "@/application/ports/searchBooks.port";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { KeyboardEventHandler, useState } from "react";
 
 type DetailSearchBookType = NonNullable<SearchBooksUIInput["type"]>;
 export type DetailSearchPayload = {
@@ -57,6 +57,13 @@ function PopoverContentComponent({
     onSubmit({ type: searchType, value: searchValue.trim() });
   };
 
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+      e.preventDefault();
+      submit();
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-end -mt-2 mb-2">
@@ -85,14 +92,7 @@ function PopoverContentComponent({
         <Input
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          onKeyDown={(e) => {
-            // When using IME (e.g., Korean), Enter can fire while composing.
-            // Guard to avoid double-submit on composition commit + Enter.
-            if (e.key === "Enter" && !e.nativeEvent.isComposing) {
-              e.preventDefault();
-              submit();
-            }
-          }}
+          onKeyDown={handleKeyDown}
         />
       </div>
       <Button type="button" className="w-full" onClick={submit}>

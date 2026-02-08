@@ -1,9 +1,14 @@
+"use client";
+
 import {
   SearchBooksUIInput,
   SearchBooksValidInput,
   searchBooksInputSchema,
 } from "@/application/ports/searchBooks.port";
-import { SearchBooksUsecase } from "@/application/usecases/books/search-books";
+import {
+  SearchBooksUsecase,
+  createSearchBooksUsecase,
+} from "@/application/usecases/books/search-books";
 
 import {
   createContext,
@@ -15,6 +20,7 @@ import {
 } from "react";
 import useSearchBooksQuery from "../react-query/queries/useSearchBooksQuery";
 import { ZodError } from "zod";
+import { bookRepo } from "@/infra/http/next/books/books.repo";
 
 type SearchBooksController = {
   searchBooksQuery: ReturnType<typeof useSearchBooksQuery>;
@@ -24,36 +30,25 @@ type SearchBooksController = {
 const SearchBooksControllerContext =
   createContext<SearchBooksController | null>(null);
 
-export function useSearchBooks() {
+export function useSearchBooksController() {
   const ctx = useContext(SearchBooksControllerContext);
   if (!ctx) {
-    throw new Error("useSearchBooks must be used within SearchBooksProvider");
+    throw new Error(
+      "useSearchBooksController must be used within SearchBooksProvider"
+    );
   }
   return ctx;
 }
 
-export function SearchBooksProvider({
-  usecase,
+export function SearchBooksControllerProvider({
   children,
 }: {
-  usecase: SearchBooksUsecase;
   children: ReactNode;
-}) {
-  const controller = useSearchBooksController({ usecase });
-  return (
-    <SearchBooksControllerContext.Provider value={controller}>
-      {children}
-    </SearchBooksControllerContext.Provider>
-  );
-}
-
-function useSearchBooksController({
-  usecase,
-}: {
-  usecase: SearchBooksUsecase;
 }) {
   const [searchBooksValidInput, setSearchBooksValidInput] =
     useState<SearchBooksValidInput>();
+
+  const usecase = useMemo(() => createSearchBooksUsecase(bookRepo), []);
   const searchBooksQuery = useSearchBooksQuery({
     usecase,
     searchBooksValidInput,
@@ -76,12 +71,17 @@ function useSearchBooksController({
     [searchBooksValidInput]
   );
 
-  // Stable controller reference for context consumers.
-  return useMemo(
+  const controller = useMemo(
     () => ({
       searchBooksQuery,
       submit,
     }),
     [searchBooksQuery, submit]
+  );
+
+  return (
+    <SearchBooksControllerContext.Provider value={controller}>
+      {children}
+    </SearchBooksControllerContext.Provider>
   );
 }

@@ -1,27 +1,27 @@
+"use client";
+
 import BookSearchBarFilter from "./BookSearchBarFilter";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { useSearchBooks } from "@/interfaces/controller/useSearchBooksController";
 import { Search } from "lucide-react";
 import { DetailSearchPayload } from "./BookSearchBarFilter";
-import { useState } from "react";
+import { SubmitEventHandler, useState } from "react";
+import { useSearchBooksController } from "@/interfaces/controller/useSearchBooksController";
 
 export default function BookSearchBar() {
-  const { submit } = useSearchBooks();
+  const { submit } = useSearchBooksController();
   const [searchValue, setSearchValue] = useState("");
 
-  const handleSubmitAll: React.FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmitAll: SubmitEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    console.log("submit all");
     submit({ type: undefined, value: searchValue });
   };
 
   const handleSubmitDetail = (payload: DetailSearchPayload) => {
     setSearchValue(payload.value);
-    console.log("submit detail");
     submit({ type: payload.type, value: payload.value });
   };
 

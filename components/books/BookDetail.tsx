@@ -1,7 +1,7 @@
 import type { Book } from "@/domain/books/book.model";
 import { Skeleton } from "../ui/skeleton";
 
-export default function BookListItemDetail({ book }: { book: Book }) {
+export default function BookDetail({ book }: { book: Book }) {
   return (
     <div className="flex gap-4">
       {book.coverUrl ? (
