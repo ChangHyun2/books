@@ -37,7 +37,7 @@ export default function BookSearchBar() {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
-        <InputGroupAddon>
+        <InputGroupAddon align="inline-end">
           <button type="submit" aria-label="검색">
             <Search />
           </button>

@@ -12,10 +12,15 @@ import QueryFallback from "../QueryFallback";
 
 function SearchBookBody() {
   const { searchBooksQuery } = useSearchBooks();
-  return searchBooksQuery.data ? (
-    <BookList books={searchBooksQuery.data.books} />
-  ) : (
-    <QueryFallback query={searchBooksQuery} />
+
+  return (
+    <div className="h-[400px]">
+      {searchBooksQuery.data ? (
+        <BookList books={searchBooksQuery.data.books} />
+      ) : (
+        <QueryFallback query={searchBooksQuery} />
+      )}
+    </div>
   );
 }
 
