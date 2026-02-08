@@ -24,6 +24,12 @@ export default function BookList() {
 
   return (
     <div>
+      <div className="flex items-center">
+        <div className="mr-4">도서 검색 결과</div>
+        <div>
+          총 <span className="font-bold text-primary">{books.length}</span>건
+        </div>
+      </div>
       <Separator className="mb-2" />
       {books.map((book, index) => (
         <div key={book.id}>
