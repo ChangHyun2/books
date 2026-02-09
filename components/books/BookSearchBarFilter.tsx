@@ -9,7 +9,6 @@ import {
 } from "../ui/select";
 import { Input } from "../ui/input";
 import { SearchBooksUIInput } from "@/application/ports/searchBooks.port";
-import { PopoverClose } from "@radix-ui/react-popover";
 import { X } from "lucide-react";
 import { KeyboardEventHandler, useState } from "react";
 
@@ -30,8 +29,10 @@ const searchBookTypeOptions: {
 
 export default function BookSearchBarFilter({
   onSubmit,
+  onClickPopOverTrigger,
 }: {
   onSubmit: (payload: DetailSearchPayload) => void;
+  onClickPopOverTrigger: () => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -41,7 +42,11 @@ export default function BookSearchBarFilter({
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
-      <PopoverTrigger asChild className="cursor-pointer">
+      <PopoverTrigger
+        asChild
+        className="cursor-pointer"
+        onClick={onClickPopOverTrigger}
+      >
         <Button>상세검색</Button>
       </PopoverTrigger>
       <PopoverContent>

@@ -15,6 +15,7 @@ export const createSearchBooksUsecase = (
     execute: async (searchBooksValidInput) => {
       const query = searchBooksValidInput;
       const { books, totalAvailableCount } = await booksRepo.searchBooks(query);
+
       return { books, totalCount: totalAvailableCount };
     },
   };

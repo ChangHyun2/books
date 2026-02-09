@@ -1,4 +1,4 @@
-import { BooksRepo } from "@/application/ports/books.repo";
+import { BooksRepo, SearchBooksQuery } from "@/application/ports/books.repo";
 import { dtoToBook } from "./book.mapper";
 import nextClient from "../next.client";
 import { NEXT_SEARCH_BOOKS_PATH } from "../../endpoints";
@@ -7,8 +7,8 @@ import {
   KakaoSearchBooksResponse,
 } from "@/infra/http/kakao/kakao-search-books.schema";
 
-export const bookRepo: BooksRepo = {
-  searchBooks: async (query) => {
+class booksRepoImpl implements BooksRepo {
+  searchBooks = async (query: SearchBooksQuery) => {
     const { value, type, page, perPage } = query;
 
     const target =
@@ -38,5 +38,9 @@ export const bookRepo: BooksRepo = {
       books: response.documents.map(dtoToBook),
       totalAvailableCount: response.meta.pageable_count,
     };
-  },
-};
+  };
+}
+
+export function createBooksRepo(): BooksRepo {
+  return new booksRepoImpl();
+}
