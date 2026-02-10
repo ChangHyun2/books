@@ -1,6 +1,6 @@
 import ky from "ky";
 
-const NEXT_API_ORIGIN = "http://localhost:3000";
-const kakaoClient = ky.create({ prefixUrl: NEXT_API_ORIGIN });
+const NEXT_API_ORIGIN = process.env.NEXT_PUBLIC_API_URL;
+const nextClient = ky.create({ prefixUrl: NEXT_API_ORIGIN });
 
-export default kakaoClient;
+export default nextClient;
