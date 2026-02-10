@@ -1,4 +1,3 @@
-link[https://books-two-chi.vercel.app/books]
 
 ## 프로젝트 개요
 
