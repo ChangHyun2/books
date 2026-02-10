@@ -13,6 +13,7 @@ export default function BookSearchHistory({
   onSelectItem: (item: SearchHistoryItem) => void;
 }) {
   const { historyItems } = useSearchHistoryStore();
+  if (historyItems.length === 0) return null;
 
   return (
     <Card className="py-1">
