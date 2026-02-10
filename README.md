@@ -14,10 +14,10 @@ npm run dev
 ```
 
 <img width="311" height="315" alt="image" src="https://github.com/user-attachments/assets/f7648bb6-668b-46fd-82ab-18b6bba282a1" />
+<img width="31-" height="290" alt="image" src="https://github.com/user-attachments/assets/03378d68-6b0e-4263-a712-a2d5acb2d7ca" />
+<img width="304" height="290" alt="image" src="https://github.com/user-attachments/assets/593800ff-971f-4a0b-be91-d85bc517f2cf" />
 
-<img width="124" height="72" alt="image" src="https://github.com/user-attachments/assets/9e4c9014-a6ec-41b6-8ce6-67f90b787ca7" />
-
-<img width="324" height="220" alt="image" src="https://github.com/user-attachments/assets/b4f1e9c3-969d-4142-abd4-0c75ab0aa0c8" />
+<img width="304" height="288" alt="image" src="https://github.com/user-attachments/assets/161c630d-5083-4525-93e7-32bf9ac1b23a" />
 
 ## 폴더 구조 및 주요 코드 설명
 
