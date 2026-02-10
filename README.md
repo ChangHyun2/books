@@ -13,11 +13,11 @@ npm install
 npm run dev
 ```
 
-<img width="933" height="946" alt="image" src="https://github.com/user-attachments/assets/f7648bb6-668b-46fd-82ab-18b6bba282a1" />
+<img width="311" height="315" alt="image" src="https://github.com/user-attachments/assets/f7648bb6-668b-46fd-82ab-18b6bba282a1" />
 
-<img width="371" height="236" alt="image" src="https://github.com/user-attachments/assets/9e4c9014-a6ec-41b6-8ce6-67f90b787ca7" />
+<img width="124" height="72" alt="image" src="https://github.com/user-attachments/assets/9e4c9014-a6ec-41b6-8ce6-67f90b787ca7" />
 
-<img width="971" height="660" alt="image" src="https://github.com/user-attachments/assets/b4f1e9c3-969d-4142-abd4-0c75ab0aa0c8" />
+<img width="324" height="220" alt="image" src="https://github.com/user-attachments/assets/b4f1e9c3-969d-4142-abd4-0c75ab0aa0c8" />
 
 ## 폴더 구조 및 주요 코드 설명
 
