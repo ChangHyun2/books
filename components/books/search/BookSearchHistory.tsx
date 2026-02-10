@@ -4,8 +4,8 @@ import { KeyboardEventHandler, MouseEventHandler, useRef } from "react";
 import handleError from "@/utils/handleError";
 import { Trash2 } from "lucide-react";
 import useSearchHistoryStore from "@/interfaces/stores/useSearchHistoryStore";
-import { Card } from "../ui/card";
-import { Button } from "../ui/button";
+import { Card } from "../../ui/card";
+import { Button } from "../../ui/button";
 
 export default function BookSearchHistory({
   onSelectItem,

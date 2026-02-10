@@ -1,7 +1,7 @@
 import type { Book } from "@/domain/books/book.model";
 import { toBookItem } from "@/interfaces/presenter/fromDomain/book.presenter";
 import { Skeleton } from "../ui/skeleton";
-import LikeBook from "./LikeBook";
+import LikeBook from "./like/LikeBook";
 
 export default function BookSummary({ book }: { book: Book }) {
   const bookItem = toBookItem(book);

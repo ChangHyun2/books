@@ -1,6 +1,6 @@
 import { BooksLikedControllerProvider } from "@/interfaces/controller/useBooksLikedController";
 import BookPageTemplate from "../BookPageTemplate";
-import BookListLiked from "@/components/books/BookListLiked";
+import BookListLiked from "@/components/books/like/BookListLiked";
 
 export default function LikedBooksPage() {
   return (

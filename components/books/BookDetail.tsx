@@ -1,6 +1,6 @@
 import type { Book } from "@/domain/books/book.model";
 import { Skeleton } from "../ui/skeleton";
-import LikeBook from "./LikeBook";
+import LikeBook from "./like/LikeBook";
 
 export default function BookDetail({ book }: { book: Book }) {
   return (

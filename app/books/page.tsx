@@ -1,8 +1,8 @@
-import BookSearchBar from "@/components/books/BookSearchBar";
+import BookSearchBar from "@/components/books/search/BookSearchBar";
 import BookPageTemplate from "./BookPageTemplate";
-import { Pagination } from "@/components/ui/pagination";
 import { SearchBooksControllerProvider } from "@/interfaces/controller/useSearchBooksController";
-import BookListSearched from "@/components/books/BookListSearched";
+import BookListSearched from "@/components/books/search/BookListSearched";
+import SearchBookPagination from "@/components/books/search/SearchBookPagination";
 
 export default function BooksPage() {
   return (
@@ -11,7 +11,7 @@ export default function BooksPage() {
       title={"도서 검색"}
       searchbar={<BookSearchBar />}
       bookList={<BookListSearched />}
-      pagination={<Pagination />}
+      pagination={<SearchBookPagination />}
     />
   );
 }

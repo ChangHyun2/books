@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchBooksController } from "@/interfaces/controller/useSearchBooksController";
-import BookPagination from "./BookPagination";
+import BookPagination from "../BookPagination";
 
 export default function SearchBookPagination() {
   const { submit, totalPages } = useSearchBooksController();

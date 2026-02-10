@@ -1,13 +1,13 @@
-import { Button } from "../ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../../ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
-import { Input } from "../ui/input";
+} from "../../ui/select";
+import { Input } from "../../ui/input";
 import { SearchBooksUIInput } from "@/application/ports/searchBooks.port";
 import { X } from "lucide-react";
 import { KeyboardEventHandler, useState } from "react";

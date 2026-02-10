@@ -1,8 +1,8 @@
 import { Book } from "@/domain/books/book.model";
 import { Heart } from "lucide-react";
-import { useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { useBooksLikedController } from "@/interfaces/controller/useBooksLikedController";
+import { useLikedBooksStore } from "@/interfaces/stores/useLikedBooksStore";
 
 export default function LikeBook({
   book,
@@ -11,15 +11,14 @@ export default function LikeBook({
   book: Book;
   size: "sm" | "md";
 }) {
-  const { usecase, likedBooksRepo } = useBooksLikedController();
-  const [isLiked, setIsLiked] = useState(() => likedBooksRepo.isLiked(book));
+  const { likeBook, unlikeBook } = useBooksLikedController();
+  const isLiked = useLikedBooksStore((state) => state.likedBookSet);
 
   const handleLike = () => {
-    const isSuccess = isLiked
-      ? usecase.unlikeBook(book)
-      : usecase.likeBook(book);
-    if (isSuccess) {
-      setIsLiked(!isLiked);
+    if (isLiked.has(book.id)) {
+      unlikeBook(book);
+    } else {
+      likeBook(book);
     }
   };
 
@@ -34,7 +33,7 @@ export default function LikeBook({
       onClick={handleLike}
     >
       <Heart
-        className={isLiked ? "fill-current" : "fill-none"}
+        className={isLiked.has(book.id) ? "fill-current" : "fill-none"}
         style={{ width: svgSize, height: svgSize }}
       />
     </Button>

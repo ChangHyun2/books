@@ -69,7 +69,8 @@ export function SearchBooksControllerProvider({
   const perPage = searchBooksValidInput?.perPage;
 
   const totalPages = useMemo(() => {
-    if (queryTotalCount === undefined || perPage === undefined) return 0;
+    if (!queryTotalCount || perPage === undefined) return 0;
+
     return Math.min(
       getTotalPages(queryTotalCount, perPage),
       KAKAO_SEARCH_BOOKS_MAX_PAGE
