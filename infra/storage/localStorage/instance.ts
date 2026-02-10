@@ -1,5 +1,10 @@
+function isBrowser(): boolean {
+  return typeof window !== "undefined";
+}
+
 class LocalStorage {
   get<T>(key: string): T | null {
+    if (!isBrowser()) return null;
     try {
       const value = localStorage.getItem(key);
       return value ? JSON.parse(value) : null;
@@ -13,18 +18,18 @@ class LocalStorage {
   }
 
   set<T>(key: string, value: T) {
+    if (!isBrowser()) return;
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (err) {
       if (err instanceof Error) {
         console.error(err);
       }
-
-      return null;
     }
   }
 
   remove(key: string) {
+    if (!isBrowser()) return;
     localStorage.removeItem(key);
   }
 }
