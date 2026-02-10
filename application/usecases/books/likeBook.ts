@@ -4,6 +4,7 @@ import { Book } from "@/domain/books/book.model";
 export type LikeBookUsecase = {
   likeBook: (book: Book) => boolean;
   unlikeBook: (book: Book) => boolean;
+  getLikedBooks: () => Book[];
 };
 
 export const createLikeBookUsecase = (
@@ -15,6 +16,9 @@ export const createLikeBookUsecase = (
     },
     unlikeBook: (book: Book) => {
       return likedBooksRepo.unlikeBook(book);
+    },
+    getLikedBooks: () => {
+      return likedBooksRepo.getLikedBooks();
     },
   };
 };

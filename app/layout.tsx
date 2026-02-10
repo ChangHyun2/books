@@ -1,15 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Link from "next/link";
 import "./globals.css";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
 import Providers from "./Providers";
+import Navigation from "@/components/layout/Navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,26 +35,7 @@ export default function RootLayout({
           <div className="p-4 w-full max-w-[960px] mx-auto h-screen flex flex-col">
             <header className="flex justify-between items-center">
               <div>BOOKS</div>
-              <NavigationMenu aria-label="Primary">
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuLink
-                      asChild
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      <Link href="/books">도서 검색</Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <NavigationMenuLink
-                      asChild
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      <Link href="/me/likes">내가 찜한 책</Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
+              <Navigation />
             </header>
             <main className="flex-1 min-h-0 overflow-hidden mx-4 my-6">
               {children}

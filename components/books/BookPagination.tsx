@@ -40,17 +40,22 @@ function buildPaginationItems(params: {
   return items;
 }
 
-export default function BookPagination() {
-  const { submit, totalPages } = useSearchBooksController();
+export default function BookPagination({
+  totalPages,
+  onPageChange,
+}: {
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}) {
   const [page, setPage] = useState(1);
 
   const items = buildPaginationItems({ currentPage: page, totalPages });
   const canPrev = page > 1;
   const canNext = page < totalPages;
 
-  const onPageChange = (page: number) => {
+  const handleChangePage = (page: number) => {
     setPage(page);
-    submit({ page });
+    onPageChange(page);
   };
 
   return (
@@ -64,7 +69,7 @@ export default function BookPagination() {
             onClick={(e) => {
               e.preventDefault();
               if (!canPrev) return;
-              onPageChange(page - 1);
+              handleChangePage(page - 1);
             }}
           />
         </PaginationItem>
@@ -78,7 +83,7 @@ export default function BookPagination() {
                 isActive={item === page}
                 onClick={(e) => {
                   e.preventDefault();
-                  onPageChange(item);
+                  handleChangePage(item);
                 }}
               >
                 {item}
@@ -94,7 +99,7 @@ export default function BookPagination() {
             onClick={(e) => {
               e.preventDefault();
               if (!canNext) return;
-              onPageChange(page + 1);
+              handleChangePage(page + 1);
             }}
           />
         </PaginationItem>

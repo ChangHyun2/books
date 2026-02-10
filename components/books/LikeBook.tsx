@@ -1,9 +1,8 @@
-import { createLikeBookUsecase } from "@/application/usecases/books/likeBook";
 import { Book } from "@/domain/books/book.model";
-import { createBookLikesRepo } from "@/infra/storage/localStorage/likedBooks.repo";
 import { Heart } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
+import { useBooksLikedController } from "@/interfaces/controller/useBooksLikedController";
 
 export default function LikeBook({
   book,
@@ -12,23 +11,17 @@ export default function LikeBook({
   book: Book;
   size: "sm" | "md";
 }) {
-  const [isLiked, setIsLiked] = useState(false);
-  const likedBooksRepo = useMemo(() => createBookLikesRepo(), []);
-  const { likeBook, unlikeBook } = useMemo(
-    () => createLikeBookUsecase(likedBooksRepo),
-    [likedBooksRepo]
-  );
+  const { usecase, likedBooksRepo } = useBooksLikedController();
+  const [isLiked, setIsLiked] = useState(() => likedBooksRepo.isLiked(book));
 
   const handleLike = () => {
-    const isSuccess = isLiked ? unlikeBook(book) : likeBook(book);
+    const isSuccess = isLiked
+      ? usecase.unlikeBook(book)
+      : usecase.likeBook(book);
     if (isSuccess) {
       setIsLiked(!isLiked);
     }
   };
-
-  useEffect(() => {
-    setIsLiked(likedBooksRepo.isLiked(book));
-  }, [book, likedBooksRepo]);
 
   const svgSize = size === "sm" ? 16 : 20;
 
@@ -36,7 +29,7 @@ export default function LikeBook({
     <Button
       type="button"
       variant="link"
-      className="text-destructive focus-visible:ring-0"
+      className="text-destructive"
       size={size === "sm" ? "iconSm" : "icon"}
       onClick={handleLike}
     >

@@ -51,13 +51,14 @@ export function SearchBooksControllerProvider({
 }: {
   children: ReactNode;
 }) {
-  const [searchBooksValidInput, setSearchBooksValidInput] =
-    useState<SearchBooksValidInput>();
+  const historyRepo = useMemo(() => createSearchHistoryRepo(), []);
+
   const usecase = useMemo(
     () => createSearchBooksUsecase(createBooksRepo()),
     []
   );
-  const historyRepo = useMemo(() => createSearchHistoryRepo(), []);
+  const [searchBooksValidInput, setSearchBooksValidInput] =
+    useState<SearchBooksValidInput>();
   const syncHistoryItems = useSearchHistoryStore((s) => s.syncHistoryItems);
   const searchBooksQuery = useSearchBooksQuery({
     usecase,

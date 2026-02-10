@@ -24,6 +24,7 @@ export class LikedBooksRepoImpl implements LikedBooksRepo {
       );
       return true;
     } catch (e) {
+      console.log(e);
       if (e instanceof Error) {
         console.error(e);
       }
@@ -39,6 +40,7 @@ export class LikedBooksRepoImpl implements LikedBooksRepo {
     const oldLikedBooksMap = new Map(this.likedBooksMap);
     likesPolicy.like(this.likedBooksMap, book);
     const isPersisted = this.persist();
+    console.log(isPersisted);
     if (!isPersisted) {
       this.likedBooksMap = oldLikedBooksMap;
     }
